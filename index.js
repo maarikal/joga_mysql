@@ -16,9 +16,11 @@ app.engine('hbs', hbs.engine({
 // setup static public directory
 app.use(express.static('public'));
 
-const mysql = require('mysql');
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}));
+
+/* Läks utils kasuta db.js faili ning controlleri aricle.js kaustas kutsusime selle käima
+const mysql = require('mysql');
 
 // create database connection
 let con = mysql.createConnection ({
@@ -31,8 +33,9 @@ let con = mysql.createConnection ({
 con.connect(function(err) {
     if(err) throw err;
     console.log('Connected to joga_mysql db')
-});
+}); */
 
+/* see kood läks controllerite kausta article.js faili
 // show all articles - index page
 app.get('/', (req, res) => {
     let query = "SELECT * FROM article";
@@ -54,7 +57,14 @@ app.get('/article/:slug', (req, res) => {
         article = result
         res.render('article', {article: article})
     });
-})
+}) */
+
+// import article route
+const articleRoutes = require('./routes/article');
+// to use article routes
+app.use('/', articleRoutes);
+app.use('/article', articleRoutes);
+
 
 // show articles on author page
 app.get('/author/:author_id', (req, res) => {
@@ -69,7 +79,6 @@ app.get('/author/:author_id', (req, res) => {
     })
 })
 
-//WHERE id="${req.params.id}
 
 // app start point
 app.listen (3000, () => {
