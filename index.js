@@ -59,13 +59,16 @@ app.get('/article/:slug', (req, res) => {
     });
 }) */
 
-// import article route
+// import article and author route
 const articleRoutes = require('./routes/article');
-// to use article routes
+const authorsRoutes = require('./routes/author');
+// to use article and author routes
 app.use('/', articleRoutes);
 app.use('/article', articleRoutes);
+app.use('/author', authorsRoutes);
 
 
+/*
 // show articles on author page
 app.get('/author/:author_id', (req, res) => {
     let query = `SELECT article.slug, article.name, article.image, article.body, article.published, author.names, author.id AS author_id FROM article INNER JOIN author ON article.author_id=author.id WHERE author_id="${req.params.author_id}"`;
@@ -77,7 +80,8 @@ app.get('/author/:author_id', (req, res) => {
         author = result[0];
         res.render('author', {articles: articles, author: author})
     })
-})
+}) */
+
 
 
 // app start point
